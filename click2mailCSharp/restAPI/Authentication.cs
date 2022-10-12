@@ -12,7 +12,7 @@ namespace c2mAPI
         public string password { get; set; }
         public Environment.Mode mode { get; set; }
         private readonly string batchURL = "batch.click2mail.com";
-        private readonly string restURL = "batch.click2mail.com";
+        private readonly string restURL = "rest.click2mail.com";
         
         public string getBatchUrl()
         {

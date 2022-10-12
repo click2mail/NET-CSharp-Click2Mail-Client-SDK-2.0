@@ -57,7 +57,7 @@ namespace c2mAPI
         public FileInfo MergeFile { get; set; }
         public Environment.Mode Mode { get; set; }
         public string StatusDescription { get; set; }
-        public List<AddressItem> AddressList { get; set; }
+        public List<AddressItem> AddressList { get; set; } = new List<AddressItem>(); 
         public ReturnAddressItem ReturnAddress { get; set; }
 
         public event StatusChangedEventHandler StatusChanged;
@@ -150,7 +150,7 @@ namespace c2mAPI
         public string runComplete(string file, string format,string addressList,ProductOptionsItem po, ReturnAddressItem ra = null, string appSignature = "")
         {
             Document d = new Document(this.Auth);
-            this.DocumentId = d.createDocument(file,po,format);
+            this.DocumentId = d.createDocument(file,po,"",format);
             if (StatusChanged != null)
             {
                 StatusChanged("DocumentID:" + DocumentId);
