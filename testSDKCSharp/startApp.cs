@@ -60,11 +60,13 @@ namespace testSDKCSharp
             }
             else if(option1 ==2)
             {
+
+                rest_SimpleSend.runSimpleSend(username, password, m);
                 //Console.WriteLine("Please select your test");
                 //Console.WriteLine("1. Create a simple Job(RAW ADDRESS XML)");
                 //Console.WriteLine("2. Get Batch Info");
                 //Console.WriteLine("3. Get Batch Cost");
-               // Console.WriteLine("4. Run Batch Simple, splitting single file to different addresses");
+                // Console.WriteLine("4. Run Batch Simple, splitting single file to different addresses");
             }
 
             

@@ -33,7 +33,7 @@ namespace testSDKCSharp
              , Product.MailClass.C2M_First_Class
              );
 
-            r.runComplete(@"/intel/test.pdf", DocumentTypes.PNG, r.createXMLFromAddressList(), po
+            r.runComplete(@"C:\intel\test.pdf", DocumentTypes.PDF, r.createXMLFromAddressList(), po
                 , new ReturnAddressItem("Return Address Name", "1234 Test Street", "", "Oak Brook", "IL", "60523")
                 );
             Console.ReadLine();
