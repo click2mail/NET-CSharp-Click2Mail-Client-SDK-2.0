@@ -12,18 +12,25 @@ namespace testSDKCSharp
         {
             Console.WriteLine("Starting Batch Test" );
             Console.WriteLine(DateTime.Now.ToString());
-            Batchc2mAPI r = new Batchc2mAPI(new Authentication(un, pw, mode),null, new System.IO.DirectoryInfo(@"c:\intel\batchRef\"));
+            here:
+                Batchc2mAPI r = new Batchc2mAPI(new Authentication(un, pw, mode),null, new System.IO.DirectoryInfo(@"c:\intel\batchRef\"));
             r.BatchId = batchId;
-            r.JobDetailsAvailable += R_JobDetailsAvailable;
+            //r.JobDetailsAvailable += R_JobDetailsAvailable;
             r.loadBatchObjectAll(false);
-            
+            if(r.JobList.Count ==0)
+            {
+
+                System.Threading.Thread.Sleep(10000);
+                goto here;
+            }
            // r.ActivateJobCheck();
             
             foreach (Jobs j in r.JobList)
             {
-                Console.WriteLine("REFID:" + j.RefId);
-                Console.WriteLine("JobID:" + j.JobId);
-                Console.WriteLine("JobID:" + j.MergeFile);
+                j.cancelJob();
+                //Console.WriteLine("REFID:" + j.RefId);
+                //Console.WriteLine("JobID:" + j.JobId);
+                //Console.WriteLine("JobID:" + j.MergeFile);
             }
 
         }

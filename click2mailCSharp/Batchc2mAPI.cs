@@ -203,12 +203,12 @@ namespace c2mAPI
                     }
 
                     job.JobId = int.Parse(x.SelectSingleNode("jobId").InnerText.ToString());
-                    job.JobIndex = x.SelectSingleNode("jobIndex").InnerText;
-                    job.JobStatus = x.SelectSingleNode("jobStatus").InnerText;
-                    job.ErrorMessage = x.SelectSingleNode("errorMessage").InnerText;
-                    job.Invoice = x.SelectSingleNode("invoice").InnerText;
-                    job.MailingDate = x.SelectSingleNode("mailingDate").InnerText;
-                    job.SubmittedDate = x.SelectSingleNode("submittedDate").InnerText;
+                    job.JobIndex = x.SelectSingleNode("jobIndex")?.InnerText;
+                    job.JobStatus = x.SelectSingleNode("jobStatus")?.InnerText;
+                    job.ErrorMessage = x.SelectSingleNode("errorMessage")?.InnerText;
+                    job.Invoice = x.SelectSingleNode("invoice")?.InnerText;
+                    job.MailingDate = x.SelectSingleNode("mailingDate")?.InnerText;
+                    job.SubmittedDate = x.SelectSingleNode("submittedDate")?.InnerText;
 
                     if (job.JobStatus == "MAILED" && includeCost)
                     {
@@ -317,12 +317,12 @@ namespace c2mAPI
                     current += 1;
 
                     job.JobId = int.Parse(x.SelectSingleNode("jobId").InnerText.ToString());
-                    job.JobIndex = x.SelectSingleNode("jobIndex").InnerText;
-                    job.JobStatus = x.SelectSingleNode("jobStatus").InnerText;
-                    job.ErrorMessage = x.SelectSingleNode("errorMessage").InnerText;
-                    job.Invoice = x.SelectSingleNode("invoice").InnerText;
-                    job.MailingDate = x.SelectSingleNode("mailingDate").InnerText;
-                    job.SubmittedDate = x.SelectSingleNode("submittedDate").InnerText;
+                    job.JobIndex = x.SelectSingleNode("jobIndex")?.InnerText;
+                    job.JobStatus = x.SelectSingleNode("jobStatus")?.InnerText;
+                    job.ErrorMessage = x.SelectSingleNode("errorMessage")?.InnerText;
+                    job.Invoice = x.SelectSingleNode("invoice")?.InnerText;
+                    job.MailingDate = x.SelectSingleNode("mailingDate")?.InnerText;
+                    job.SubmittedDate = x.SelectSingleNode("submittedDate")?.InnerText;
 
 
                     if (job.JobStatus == "MAILED" && includeCost)
@@ -449,7 +449,7 @@ namespace c2mAPI
             byte[] byteData = null;
             Stream postStream = null;
 
-            address = new Uri(getBatchURL() + "/v1/batches");
+            address = new Uri(this.Auth.getBatchUrl() + "/v1/batches");
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(address);
             string authinfo = null;
             
@@ -712,7 +712,7 @@ namespace c2mAPI
             //Return
             _XMLDOC.LoadXml(createXMLBatchPost());
             string strURI = string.Empty;
-            strURI = getBatchURL() + "/v1/batches/" + BatchId;
+            strURI = this.Auth.getBatchUrl() + "/v1/batches/" + BatchId;
             PutObject(strURI, _XMLDOC);
             return;
 
@@ -794,7 +794,7 @@ namespace c2mAPI
             WebClient client = new WebClient();
 
             string strURI = string.Empty;
-            strURI = getBatchURL() + "/v1/batches/" + BatchId;
+            strURI = this.Auth.getBatchUrl() + "/v1/batches/" + BatchId;
             string authinfo = null;
             
             client.Headers["Authorization"] = this.Auth.getBasicAuthentication();
@@ -831,7 +831,7 @@ namespace c2mAPI
         public string getBatchStatus()
         {
             string strURI = string.Empty;
-            strURI = getBatchURL() + "/v1/batches/" + BatchId;
+            strURI = this.Auth.getBatchUrl() + "/v1/batches/" + BatchId;
             //   Console.WriteLine(strURI);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(strURI);
             
@@ -862,7 +862,7 @@ namespace c2mAPI
         public string getBatchStatusDetails()
         {
             string strURI = string.Empty;
-            strURI = getBatchURL() + "/v1/batches/" + BatchId + "/details";
+            strURI = this.Auth.getBatchUrl() + "/v1/batches/" + BatchId + "/details";
             //   Console.WriteLine(strURI);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(strURI);
             
@@ -894,7 +894,7 @@ namespace c2mAPI
         public string getBatchTracking(string trackingType)
         {
             string strURI = string.Empty;
-            strURI = getBatchURL() + "/v1/batches/" + BatchId + "/tracking?trackingType=" + trackingType;
+            strURI = this.Auth.getBatchUrl() + "/v1/batches/" + BatchId + "/tracking?trackingType=" + trackingType;
             //    Console.WriteLine(strURI);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(strURI);
             request.Headers["Authorization"] = this.Auth.getBasicAuthentication();
@@ -930,7 +930,7 @@ namespace c2mAPI
 
             Stream postStream = null;
 
-            address = new Uri(getBatchURL() + "/v1/batches/" + BatchId);
+            address = new Uri(this.Auth.getBatchUrl() + "/v1/batches/" + BatchId);
             System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(address);
 
             // Create the web request  
@@ -1105,17 +1105,7 @@ namespace c2mAPI
             }
 
         }
-        private string getBatchURL()
-        {
-            if (Mode == Environment.Mode.LiveMode)
-            {
-                return _lmainurl;
-            }
-            else
-            {
-                return _Smainurl;
-            }
-        }
+
 
 
         public string RemoveTroublesomeCharacters(string inString)
